@@ -1,3 +1,5 @@
+use std::time::Instant;
+
 fn solve_part1(input: &str) -> usize {
     input
         .lines()
@@ -23,8 +25,17 @@ fn solve_part2(input: &str) -> usize {
 
 fn main() {
     let input = include_str!("input.txt");
-    println!("PART 1: {}", solve_part1(input));
-    println!("PART 2: {}", solve_part2(input));
+
+    let t = Instant::now();
+    let solution1 = solve_part1(input);
+    let time1 = Instant::now() - t;
+
+    let t = Instant::now();
+    let solution2 = solve_part2(input);
+    let time2 = Instant::now() - t;
+
+    println!("PART 1: {} ({} μs)", solution1, time1.as_micros());
+    println!("PART 2: {} ({} μs)", solution2, time2.as_micros());
 }
 
 #[test]
