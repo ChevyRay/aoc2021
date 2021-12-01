@@ -13,19 +13,21 @@ fn solve_part1(input: &str) -> i32 {
 fn solve_part2(input: &str) -> i32 {
     input
         .lines()
-        .map(|s| s.parse().ok())
-        .collect::<Option<Vec<_>>>()
-        .and_then(|nums| {
-            Some(
-                nums.windows(3)
-                    .map(|n| n.iter().sum())
-                    .fold((0, i32::MAX), |(c, p), n| {
-                        (if n > p { c + 1 } else { c }, n)
-                    })
-                    .0,
-            )
+        .map(|s| s.parse::<i32>().unwrap())
+        .fold((0, i32::MAX, None, None), |(n, p, a, b), c| {
+            a.and_then(|a| {
+                b.and_then(|b| {
+                    Some((
+                        if a + b + c > p { n + 1 } else { n },
+                        a + b + c,
+                        Some(b),
+                        Some(c),
+                    ))
+                })
+            })
+            .unwrap_or_else(|| (n, p, b, Some(c)))
         })
-        .unwrap()
+        .0
 }
 
 fn main() {
