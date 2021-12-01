@@ -1,4 +1,4 @@
-fn solve_part1(input: &'static str) -> usize {
+fn solve_part1(input: &str) -> usize {
     input
         .lines()
         .map(|s| s.parse::<usize>().unwrap())
@@ -8,7 +8,7 @@ fn solve_part1(input: &'static str) -> usize {
         .0
 }
 
-fn solve_part2(input: &'static str) -> usize {
+fn solve_part2(input: &str) -> usize {
     let nums = input
         .lines()
         .map(|s| s.parse::<usize>().unwrap())
