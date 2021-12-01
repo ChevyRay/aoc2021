@@ -2,8 +2,8 @@ fn solve_part1(input: &str) -> i32 {
     input
         .lines()
         .map(|s| s.parse().unwrap())
-        .fold((0, i32::MAX), |(c, p), n| {
-            (if n > p { c + 1 } else { c }, n)
+        .fold((0, i32::MAX), |(sum, prev), n| {
+            (if n > prev { sum + 1 } else { sum }, n)
         })
         .0
 }
@@ -17,8 +17,8 @@ fn solve_part2(input: &str) -> i32 {
             Some(
                 nums.windows(3)
                     .map(|n| n.iter().sum())
-                    .fold((0, i32::MAX), |(c, p), n| {
-                        (if n > p { c + 1 } else { c }, n)
+                    .fold((0, i32::MAX), |(sum, prev), n| {
+                        (if n > prev { sum + 1 } else { sum }, n)
                     })
                     .0,
             )
@@ -30,18 +30,18 @@ fn solve_part2_no_collect(input: &str) -> i32 {
     input
         .lines()
         .map(|s| s.parse::<i32>().unwrap())
-        .fold((0, i32::MAX, None, None), |(n, p, a, b), c| {
+        .fold((0, i32::MAX, None, None), |(sum, prev, a, b), c| {
             a.and_then(|a| {
                 b.and_then(|b| {
                     Some((
-                        if a + b + c > p { n + 1 } else { n },
+                        if a + b + c > prev { sum + 1 } else { sum },
                         a + b + c,
                         Some(b),
                         Some(c),
                     ))
                 })
             })
-            .unwrap_or((n, p, b, Some(c)))
+            .unwrap_or((sum, prev, b, Some(c)))
         })
         .0
 }
@@ -49,7 +49,7 @@ fn solve_part2_no_collect(input: &str) -> i32 {
 fn main() {
     use std::time::Instant;
 
-    let input = include_str!("input.txt");
+    let input = include_str!("day1.txt");
 
     let t = Instant::now();
     let solution1 = solve_part1(input);
@@ -74,7 +74,8 @@ fn main() {
 
 #[test]
 fn test() {
-    let input = include_str!("test.txt");
+    let input = include_str!("day1_test.txt");
     assert_eq!(solve_part1(input), 7);
     assert_eq!(solve_part2(input), 5);
+    assert_eq!(solve_part2_no_collect(input), 5);
 }
