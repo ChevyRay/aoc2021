@@ -41,7 +41,7 @@ fn solve_part2_no_collect(input: &str) -> i32 {
                     ))
                 })
             })
-            .unwrap_or_else(|| (n, p, b, Some(c)))
+            .unwrap_or((n, p, b, Some(c)))
         })
         .0
 }
