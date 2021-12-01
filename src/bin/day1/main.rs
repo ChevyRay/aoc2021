@@ -1,24 +1,24 @@
 use std::time::Instant;
 
-fn solve_part1(input: &str) -> usize {
+fn solve_part1(input: &str) -> i32 {
     input
         .lines()
-        .map(|s| s.parse::<usize>().unwrap())
-        .fold((0, None), |(c, p), n| {
-            (if n > p.unwrap_or(n) { c + 1 } else { c }, Some(n))
+        .map(|s| s.parse().unwrap())
+        .fold((0, i32::MAX), |(c, p), n| {
+            (if n > p { c + 1 } else { c }, n)
         })
         .0
 }
 
-fn solve_part2(input: &str) -> usize {
+fn solve_part2(input: &str) -> i32 {
     let nums = input
         .lines()
-        .map(|s| s.parse::<usize>().unwrap())
-        .collect::<Vec<usize>>();
+        .map(|s| s.parse().unwrap())
+        .collect::<Vec<_>>();
     (0..(nums.len() - 2))
-        .map(|i| nums[i..][..3].iter().sum::<usize>())
-        .fold((0, None), |(c, p), n| {
-            (if n > p.unwrap_or(n) { c + 1 } else { c }, Some(n))
+        .map(|i| nums[i..][..3].iter().sum())
+        .fold((0, i32::MAX), |(c, p), n| {
+            (if n > p { c + 1 } else { c }, n)
         })
         .0
 }
