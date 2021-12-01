@@ -1,5 +1,3 @@
-use std::time::Instant;
-
 fn solve_part1(input: &str) -> i32 {
     input
         .lines()
@@ -49,6 +47,8 @@ fn solve_part2_no_collect(input: &str) -> i32 {
 }
 
 fn main() {
+    use std::time::Instant;
+
     let input = include_str!("input.txt");
 
     let t = Instant::now();
