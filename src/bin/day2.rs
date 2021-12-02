@@ -2,7 +2,7 @@ fn part1(input: &'static str) -> i32 {
     let (depth, x) = input
         .lines()
         .map(|s| {
-            let (dir, num) = s.split_once(" ").unwrap();
+            let (dir, num) = s.split_once(' ').unwrap();
             (dir, num.parse::<i32>().unwrap())
         })
         .fold((0, 0), |(depth, x), (dir, num)| match dir {
@@ -18,7 +18,7 @@ fn part2(input: &'static str) -> i32 {
     let (depth, x, _) = input
         .lines()
         .map(|s| {
-            let (dir, num) = s.split_once(" ").unwrap();
+            let (dir, num) = s.split_once(' ').unwrap();
             (dir, num.parse::<i32>().unwrap())
         })
         .fold((0, 0, 0), |(depth, x, aim), (dir, num)| match dir {
