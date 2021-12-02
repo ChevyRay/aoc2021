@@ -49,8 +49,7 @@ fn main() {
 
 #[test]
 fn test() {
-    let input = include_str!("day1_test.txt");
-    assert_eq!(solve_part1(input), 7);
-    assert_eq!(solve_part2(input), 5);
-    assert_eq!(solve_part2_no_collect(input), 5);
+    let input = include_str!("day2_test.txt");
+    assert_eq!(part1(input), 150);
+    assert_eq!(part2(input), 900);
 }
