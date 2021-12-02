@@ -1,33 +1,33 @@
 fn part1(input: &'static str) -> i32 {
-    let (depth, x) = input
+    let (d, x) = input
         .lines()
-        .map(|s| {
-            let (dir, num) = s.split_once(' ').unwrap();
-            (dir, num.parse::<i32>().unwrap())
+        .filter_map(|s| {
+            s.split_once(' ')
+                .map(|(i, n)| (i, n.parse::<i32>().unwrap()))
         })
-        .fold((0, 0), |(depth, x), (dir, num)| match dir {
-            "forward" => (depth, x + num),
-            "down" => (depth + num, x),
-            "up" => (depth - num, x),
-            _ => (depth, x),
+        .fold((0, 0), |(d, x), (i, n)| match i {
+            "forward" => (d, x + n),
+            "down" => (d + n, x),
+            "up" => (d - n, x),
+            _ => (d, x),
         });
-    depth * x
+    d * x
 }
 
 fn part2(input: &'static str) -> i32 {
-    let (depth, x, _) = input
+    let (d, x, _) = input
         .lines()
-        .map(|s| {
-            let (dir, num) = s.split_once(' ').unwrap();
-            (dir, num.parse::<i32>().unwrap())
+        .filter_map(|s| {
+            s.split_once(' ')
+                .map(|(i, n)| (i, n.parse::<i32>().unwrap()))
         })
-        .fold((0, 0, 0), |(depth, x, aim), (dir, num)| match dir {
-            "forward" => (depth + aim * num, x + num, aim),
-            "down" => (depth, x, aim + num),
-            "up" => (depth, x, aim - num),
-            _ => (depth, x, aim),
+        .fold((0, 0, 0), |(d, x, a), (i, n)| match i {
+            "forward" => (d + a * n, x + n, a),
+            "down" => (d, x, a + n),
+            "up" => (d, x, a - n),
+            _ => (d, x, a),
         });
-    depth * x
+    d * x
 }
 
 fn main() {
