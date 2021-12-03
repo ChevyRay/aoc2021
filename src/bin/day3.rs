@@ -43,15 +43,23 @@ fn part2(input: &'static str) -> i32 {
                 }
             })
         };
-        let reduce =
-            |nums: Vec<i32>, want| nums.iter().copied().filter(|n| n & bit == want).collect();
+        let reduce = |nums: &mut Vec<i32>, want| {
+            let mut i = 0;
+            while i < nums.len() {
+                if nums[i] & bit == want {
+                    i += 1;
+                } else {
+                    nums.swap_remove(i);
+                }
+            }
+        };
         if o_nums.len() > 1 {
             let (z, o) = count(&o_nums);
-            o_nums = reduce(o_nums, if o >= z { bit } else { 0 });
+            reduce(&mut o_nums, if o >= z { bit } else { 0 });
         }
         if c_nums.len() > 1 {
             let (z, o) = count(&c_nums);
-            c_nums = reduce(c_nums, if o < z { bit } else { 0 });
+            reduce(&mut c_nums, if o < z { bit } else { 0 });
         }
     }
     o_nums[0] * c_nums[0]
