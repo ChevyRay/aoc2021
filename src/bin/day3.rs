@@ -1,28 +1,23 @@
 fn part1(input: &'static str) -> i32 {
-    let (zeros, ones, max) = input
-        .lines()
-        .map(|s| (i32::from_str_radix(s, 2).unwrap(), s.len()))
-        .fold(
-            ([0; 32], [0; 32], 0),
-            |(mut zeros, mut ones, max), (bits, len)| {
-                assert!(len < 32);
-                for i in 0..len {
-                    if (bits >> i) & 1 == 1 {
-                        ones[i] += 1;
-                    } else {
-                        zeros[i] += 1;
-                    }
+    let last = input.lines().next().unwrap().len() - 1;
+    let nums = input.lines().map(|s| i32::from_str_radix(s, 2).unwrap());
+    let (g, e) = (0..=last)
+        .map(|i| {
+            let bit = 1 << i;
+            let (z, o) = nums.clone().fold((0, 0), |(z, o), n| {
+                if (n & bit) == bit {
+                    (z, o + 1)
+                } else {
+                    (z + 1, o)
                 }
-                (zeros, ones, max.max(len))
-            },
-        );
-    let (g, e) = (0..max).fold((0, 0), |(g, e), i| {
-        if ones[i] > zeros[i] {
-            (g | (1 << i), e)
-        } else {
-            (g, e | (1 << i))
-        }
-    });
+            });
+            if o > z {
+                (bit, 0)
+            } else {
+                (0, bit)
+            }
+        })
+        .fold((0, 0), |(g, e), (gg, ee)| (g | gg, e | ee));
     g * e
 }
 
